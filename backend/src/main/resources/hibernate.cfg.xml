@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "https://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<!-- Main configuration file -->
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+        <property name="hibernate.connection.url">
+            jdbc:sqlserver://localhost:1433;databaseName=aman;trustServerCertificate=true
+        </property>
+        <property name="hibernate.connection.username">sa</property>
+        <property name="hibernate.connection.password">@Aa01102137154</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.SQLServer2016Dialect</property>
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+        <property name="hbm2ddl.auto">update</property>
+
+        <mapping class="com.domain.BaseEntity"/>
+        <mapping class="com.domain.MasterFile"/>
+        <mapping class="com.domain.DocumentFile"/>
+        <mapping class="com.domain.Member"/>
+        <mapping class="com.domain.Region"/>
+        <mapping class="com.domain.MemberOrder"/>
+        <mapping class="com.domain.Sheet"/>
+        <mapping class="com.domain.SheetLine"/>
+        <mapping class="com.domain.DeliveryMan"/>
+        <mapping class="com.domain.DeliveryManRegionLine"/>
+        <mapping class="com.domain.Attachment"/>
+
+
+    </session-factory>
+</hibernate-configuration>

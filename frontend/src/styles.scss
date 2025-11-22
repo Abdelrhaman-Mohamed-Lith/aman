@@ -1,0 +1,75 @@
+/* Global Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+
+/* Vuetify Overrides */
+.v-application {
+  background-color: #f5f5f5 !important;
+}
+
+/* Buttons */
+.v-btn {
+  border-radius: 8px;
+  text-transform: none;
+  font-weight: 500;
+}
+
+/* Data Tables */
+.v-data-table {
+  border-radius: 12px;
+  background-color: #ffffff;
+}
+
+/* Dialogs */
+.v-dialog .v-card {
+  border-radius: 12px;
+}
+
+/* Form Inputs */
+.v-text-field,
+.v-select,
+.v-textarea {
+  border-radius: 8px;
+}
+
+/* Chips */
+.v-chip {
+  font-weight: 500;
+  text-transform: none;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: #333333;
+}
+
+/* Notifications (from Pinia or custom) */
+.notification {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #999999;
+}
