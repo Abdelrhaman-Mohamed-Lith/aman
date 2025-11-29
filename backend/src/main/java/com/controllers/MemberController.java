@@ -36,13 +36,13 @@ public class MemberController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MemberDTO> updateMember(@PathVariable Long id, @RequestBody MemberDTO request) {
+    public ResponseEntity<MemberDTO> updateMember(@PathVariable(name = "id") Long id, @RequestBody MemberDTO request) {
         MemberDTO updated = service.update(id, request);
         return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMember(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteMember(@PathVariable(name = "id") Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

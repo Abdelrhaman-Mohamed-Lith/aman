@@ -43,6 +43,10 @@ public abstract class BaseEntity implements IEntity {
         this.creationDate = creationDate;
     }
 
+    public void updateCalculatedFields(Result result) {
+
+    }
+
     @Transient
     public void isValidForCommit(Result result) {
         ValidatorUtil.isEmptyRequired(getCode(), "Code", result);

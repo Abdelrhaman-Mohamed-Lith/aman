@@ -36,13 +36,13 @@ public class SheetController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SheetDTO> updateSheet(@PathVariable Long id, @RequestBody SheetDTO request) {
+    public ResponseEntity<SheetDTO> updateSheet(@PathVariable(name = "id") Long id, @RequestBody SheetDTO request) {
         SheetDTO updated = service.update(id, request);
         return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSheet(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteSheet(@PathVariable(name = "id") Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

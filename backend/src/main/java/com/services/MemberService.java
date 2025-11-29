@@ -22,8 +22,21 @@ public class MemberService {
     @Transactional
     public MemberDTO create(MemberDTO dto) {
         Member entity = mapper.toEntity(dto);
+        entity.setCode(entity.getRegistrationNumber() + "_" + calcSyndicatePrefix(entity.getSyndicate()));
         Result result = Persister.saveOrUpdate(entity);
+        if (result.isFailed())
+            throw new RuntimeException(result.getMessage());
         return mapper.toDTO(entity);
+    }
+
+    private String calcSyndicatePrefix(Syndicate syndicate) {
+        if (ObjectChecker.areEqual(syndicate, Syndicate.Medical))
+            return "1";
+        if (ObjectChecker.areEqual(syndicate, Syndicate.Pharmaceutical))
+            return "2";
+        if (ObjectChecker.areEqual(syndicate, Syndicate.Dentists))
+            return "3";
+        return "4";
     }
 
     public List<MemberDTO> getAll() {
@@ -36,21 +49,23 @@ public class MemberService {
 
     @Transactional
     public MemberDTO update(Long id, MemberDTO dto) {
-        Member existing = Persister.findById(Member.class, id);
-        existing.setCode(dto.getCode());
-        existing.setRegistrationNumber(dto.getRegistrationNumber());
-        existing.setMedicalCardNumber(dto.getMedicalCardNumber());
-        if (ObjectChecker.isNotEmptyOrZeroOrNull(dto.getSyndicate()))
-            existing.setSyndicate(Syndicate.valueOf(dto.getSyndicate()));
-        existing.setWhatsappNumber(dto.getWhatsappNumber());
-        existing.setPhone1(dto.getPhone1());
-        existing.setPhone2(dto.getPhone2());
-        if (ObjectChecker.isNotEmptyOrZeroOrNull(dto.getGovernorate()))
-            existing.setGovernorate(Governorate.valueOf(dto.getGovernorate()));
-        existing.setAddress(dto.getAddress());
-        existing.setRegion(dto.getRegion() != null ? mapper.toEntity(dto).getRegion() : null);
-        existing.setRemarks(dto.getRemarks());
+        Member existing = mapper.toEntity(dto)/* Persister.findById(Member.class, id)*/;
+//        existing.setCode(dto.getCode());
+//        existing.setRegistrationNumber(dto.getRegistrationNumber());
+//        existing.setMedicalCardNumber(dto.getMedicalCardNumber());
+//        if (ObjectChecker.isNotEmptyOrZeroOrNull(dto.getSyndicate()))
+//            existing.setSyndicate(Syndicate.valueOf(dto.getSyndicate()));
+//        existing.setWhatsappNumber(dto.getWhatsappNumber());
+//        existing.setPhone1(dto.getPhone1());
+//        existing.setPhone2(dto.getPhone2());
+//        if (ObjectChecker.isNotEmptyOrZeroOrNull(dto.getGovernorate()))
+//            existing.setGovernorate(Governorate.valueOf(dto.getGovernorate()));
+//        existing.setAddress(dto.getAddress());
+//        existing.setRegion(dto.getRegion() != null ? mapper.toEntity(dto).getRegion() : null);
+//        existing.setRemarks(dto.getRemarks());
         Result result = Persister.saveOrUpdate(existing);
+        if (result.isFailed())
+            throw new RuntimeException(result.getMessage());
         return mapper.toDTO(existing);
     }
 

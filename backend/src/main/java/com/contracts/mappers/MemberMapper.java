@@ -4,16 +4,19 @@ import com.contracts.dtos.MemberDTO;
 import com.domain.Member;
 import com.domain.Syndicate;
 import com.domain.Governorate;
+import com.utilities.ObjectChecker;
 
-public class MemberMapper extends BaseMapper<Member, MemberDTO> {
+public class MemberMapper extends MasterFileMapper<Member, MemberDTO> {
     @Override
     protected MemberDTO createDTO() {
         return new MemberDTO();
     }
+
     @Override
     protected Member createEntity() {
         return new Member();
     }
+
     @Override
     public MemberDTO toDTO(Member entity) {
         if (entity == null) return null;
@@ -43,12 +46,12 @@ public class MemberMapper extends BaseMapper<Member, MemberDTO> {
         entity.setPhone2(dto.getPhone2());
         entity.setAddress(dto.getAddress());
         entity.setRemarks(dto.getRemarks());
-        if (dto.getSyndicate() != null)
+        if (ObjectChecker.isNotEmptyOrZeroOrNull(dto.getSyndicate()))
             entity.setSyndicate(Syndicate.valueOf(dto.getSyndicate()));
-        if (dto.getGovernorate() != null)
+        if (ObjectChecker.isNotEmptyOrZeroOrNull(dto.getGovernorate()))
             entity.setGovernorate(Governorate.valueOf(dto.getGovernorate()));
-        if (dto.getRegion() != null)
-           entity.setRegion(new RegionMapper().toEntity(dto.getRegion()));
+        if (ObjectChecker.isNotEmptyOrZeroOrNull(dto.getRegion()))
+            entity.setRegion(new RegionMapper().toEntity(dto.getRegion()));
         return entity;
     }
 }

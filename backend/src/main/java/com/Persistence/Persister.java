@@ -2,6 +2,8 @@ package com.Persistence;
 
 import com.domain.BaseEntity;
 import com.utilities.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -37,7 +39,7 @@ public class Persister {
     private static void execute(Consumer<Result> consumer, Result result) {
         if (session == null) {
             try {
-                session = factory.openSession();
+                session = openSession();
                 t = session.beginTransaction();
                 consumer.accept(result);
                 if (result.isFailed()) {
@@ -47,8 +49,10 @@ public class Persister {
                 t.commit();
             } catch (Exception e) {
                 e.printStackTrace();
+                result.failure(e.getMessage());
                 try {
-                    t.rollback();
+                    if (t != null && t.isActive())
+                        t.rollback();
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
@@ -109,7 +113,7 @@ public class Persister {
     public static <T> List<T> list(Class<T> klass, String condition, Map<String, Object> params) {
         ObjectWrapper<List<T>> wrapper = new ObjectWrapper<>();
         execute(r -> {
-            Query<T> query = session.createQuery("From " + klass.getSimpleName() + " " + condition);
+            Query<T> query = session.createQuery("From " + klass.getSimpleName() + " " + condition, klass);
 
             setParameters(query, params);
             List<T> resultedList = query.list();

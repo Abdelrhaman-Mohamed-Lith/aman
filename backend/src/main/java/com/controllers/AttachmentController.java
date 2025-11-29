@@ -36,13 +36,13 @@ public class AttachmentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AttachmentDTO> updateAttachment(@PathVariable Long id, @RequestBody AttachmentDTO request) {
+    public ResponseEntity<AttachmentDTO> updateAttachment(@PathVariable(name = "id") Long id, @RequestBody AttachmentDTO request) {
         AttachmentDTO updated = service.update(id, request);
         return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAttachment(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteAttachment(@PathVariable(name = "id") Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

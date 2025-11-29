@@ -6,6 +6,7 @@ import org.hibernate.annotations.Nationalized;
 @MappedSuperclass
 public abstract class MasterFile extends BaseEntity {
     private String name;
+
     @Nationalized
     public String getName() {
         return name;

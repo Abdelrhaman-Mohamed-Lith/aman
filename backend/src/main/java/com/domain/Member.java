@@ -1,6 +1,8 @@
 package com.domain;
 
+import com.utilities.Result;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Nationalized;
 
 @Entity
 public class Member extends MasterFile {
@@ -10,7 +12,6 @@ public class Member extends MasterFile {
     private String whatsappNumber;
     private String phone1;
     private String phone2;
-    @Enumerated(EnumType.STRING)
     private Governorate governorate;
     private String address;
 
@@ -67,7 +68,6 @@ public class Member extends MasterFile {
     }
 
     @Enumerated(EnumType.STRING)
-
     public Governorate getGovernorate() {
         return governorate;
     }
@@ -76,6 +76,7 @@ public class Member extends MasterFile {
         this.governorate = governorate;
     }
 
+    @Nationalized
     public String getAddress() {
         return address;
     }
@@ -84,7 +85,7 @@ public class Member extends MasterFile {
         this.address = address;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "region_id")
     public Region getRegion() {
         return region;
@@ -100,5 +101,11 @@ public class Member extends MasterFile {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    @Override
+    public void updateCalculatedFields(Result result) {
+        super.updateCalculatedFields(result);
+        setCode(getWhatsappNumber());
     }
 }

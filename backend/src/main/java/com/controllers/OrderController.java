@@ -36,13 +36,13 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrderDTO> updateOrder(@PathVariable Long id, @RequestBody OrderDTO request) {
+    public ResponseEntity<OrderDTO> updateOrder(@PathVariable(name = "id") Long id, @RequestBody OrderDTO request) {
         OrderDTO updated = service.update(id, request);
         return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteOrder(@PathVariable(name = "id") Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
