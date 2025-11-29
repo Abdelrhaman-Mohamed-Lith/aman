@@ -8,12 +8,12 @@ import com.utilities.ObjectChecker;
 
 public class MemberMapper extends MasterFileMapper<Member, MemberDTO> {
     @Override
-    protected MemberDTO createDTO() {
+    public MemberDTO createDTO() {
         return new MemberDTO();
     }
 
     @Override
-    protected Member createEntity() {
+    public Member createEntity() {
         return new Member();
     }
 

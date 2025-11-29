@@ -23,4 +23,14 @@ public class DeliveryManLineMapper implements IMapper<DeliveryManRegionLine, Del
         line.setRegion((Region) MapperUtil.fetchMapper(Region.class).toEntity(dto.getRegion()));
         return line;
     }
+
+    @Override
+    public DeliveryManRegionLineDTO createDTO() {
+        return new DeliveryManRegionLineDTO();
+    }
+
+    @Override
+    public DeliveryManRegionLine createEntity() {
+        return new DeliveryManRegionLine();
+    }
 }

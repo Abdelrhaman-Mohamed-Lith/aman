@@ -34,10 +34,5 @@ public abstract class BaseMapper<E extends BaseEntity, D extends BaseEntityDTO> 
         return entity;
     }
 
-    /**
-     * Each subclass must define how to instantiate its DTO and Entity.
-     */
-    protected abstract D createDTO();
 
-    protected abstract E createEntity();
 }

@@ -28,4 +28,14 @@ public class AttachmentMapper implements IMapper<Attachment, AttachmentDTO> {
         entity.setStoragePath(dto.getStoragePath());
         return entity;
     }
+
+    @Override
+    public AttachmentDTO createDTO() {
+        return new AttachmentDTO();
+    }
+
+    @Override
+    public Attachment createEntity() {
+        return new Attachment();
+    }
 }

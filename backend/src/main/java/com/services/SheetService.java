@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 import com.utilities.IEntity;
 import com.utilities.Result;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,7 +23,11 @@ public class SheetService {
     @Transactional
     public SheetDTO create(SheetDTO dto) {
         Sheet entity = mapper.toEntity(dto);
+        DateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_HH");
+        entity.setCode(formatter.format(new Date()));
         Result result = Persister.saveOrUpdate(entity);
+        if (result.isFailed())
+            throw new RuntimeException(result.getMessage());
         return mapper.toDTO(entity);
     }
 
@@ -39,8 +47,9 @@ public class SheetService {
         existing.setFromDate(dto.getFromDate());
         existing.setToDate(dto.getToDate());
         existing.setStatus(mapper.toEntity(dto).getStatus());
-        existing.setDetails(mapper.toEntity(dto).getDetails());
         Result result = Persister.saveOrUpdate(existing);
+        if (result.isFailed())
+            throw new RuntimeException(result.getMessage());
         return mapper.toDTO(existing);
     }
 

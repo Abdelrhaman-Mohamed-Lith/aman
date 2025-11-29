@@ -49,12 +49,12 @@ public class DeliveryManMapper extends MasterFileMapper<DeliveryMan, DeliveryMan
     }
 
     @Override
-    protected DeliveryManDTO createDTO() {
+    public DeliveryManDTO createDTO() {
         return new DeliveryManDTO();
     }
 
     @Override
-    protected DeliveryMan createEntity() {
+    public DeliveryMan createEntity() {
         return new DeliveryMan();
     }
 }

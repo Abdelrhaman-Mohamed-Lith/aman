@@ -6,12 +6,12 @@ import com.domain.Region;
 public class RegionMapper extends MasterFileMapper<Region, RegionDTO> {
 
     @Override
-    protected RegionDTO createDTO() {
+    public RegionDTO createDTO() {
         return new RegionDTO();
     }
 
     @Override
-    protected Region createEntity() {
+    public Region createEntity() {
         return new Region();
     }
 }

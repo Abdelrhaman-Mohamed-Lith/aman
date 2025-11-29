@@ -25,6 +25,8 @@ public class MapperUtil {
         mappers.put(MemberOrder.class, new OrderMapper());
         mappers.put(Sheet.class, new SheetMapper());
         mappers.put(SheetLine.class, new SheetLineMapper());
+        mappers.put(SheetProblemLine.class, new SheetProblemLineMapper());
+        mappers.put(FiscalYear.class, new FiscalYearMapper());
         mappers.put(DeliveryMan.class, new DeliveryManMapper());
         mappers.put(DeliveryManRegionLine.class, new DeliveryManLineMapper());
     }

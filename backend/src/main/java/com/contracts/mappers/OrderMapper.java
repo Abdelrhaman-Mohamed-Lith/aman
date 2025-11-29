@@ -11,12 +11,12 @@ import com.domain.MemberOrder;
 public class OrderMapper extends BaseMapper<MemberOrder, OrderDTO> {
 
     @Override
-    protected OrderDTO createDTO() {
+    public OrderDTO createDTO() {
         return new OrderDTO();
     }
 
     @Override
-    protected MemberOrder createEntity() {
+    public MemberOrder createEntity() {
         return new MemberOrder();
     }
 

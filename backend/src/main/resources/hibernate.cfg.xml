@@ -23,9 +23,12 @@
         <mapping class="com.domain.Region"/>
         <mapping class="com.domain.MemberOrder"/>
         <mapping class="com.domain.Sheet"/>
+        <mapping class="com.domain.AbsSheetLine"/>
         <mapping class="com.domain.SheetLine"/>
+        <mapping class="com.domain.SheetProblemLine"/>
         <mapping class="com.domain.DeliveryMan"/>
         <mapping class="com.domain.DeliveryManRegionLine"/>
+        <mapping class="com.domain.FiscalYear"/>
         <mapping class="com.domain.Attachment"/>
 
 

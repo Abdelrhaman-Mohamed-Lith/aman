@@ -20,17 +20,17 @@ public class SheetMapper extends BaseMapper<Sheet, SheetDTO> {
         dto.setFromDate(entity.getFromDate());
         dto.setToDate(entity.getToDate());
         dto.setStatus(entity.getStatus() != null ? entity.getStatus().name() : null);
-        IMapper<SheetLine, SheetLineDTO> mapper = MapperUtil.fetchMapper(Sheet.class);
-        if (entity.getDetails() != null) {
-            List<SheetLineDTO> lineDTOs = entity.getDetails().stream()
-                    .map(line -> {
-                        SheetLineDTO lineDTO = mapper.toDTO(line);
-                        lineDTO.setSheet(dto);
-                        return lineDTO;
-                    })
-                    .collect(Collectors.toList());
-            dto.setDetails(lineDTOs);
-        }
+//        IMapper<SheetLine, SheetLineDTO> mapper = MapperUtil.fetchMapper(Sheet.class);
+//        if (entity.getDetails() != null) {
+//            List<SheetLineDTO> lineDTOs = entity.getDetails().stream()
+//                    .map(line -> {
+//                        SheetLineDTO lineDTO = mapper.toDTO(line);
+//                        lineDTO.setSheet(dto);
+//                        return lineDTO;
+//                    })
+//                    .collect(Collectors.toList());
+//            dto.setDetails(lineDTOs);
+//        }
         return dto;
     }
 
@@ -44,28 +44,28 @@ public class SheetMapper extends BaseMapper<Sheet, SheetDTO> {
         entity.setFromDate(dto.getFromDate());
         entity.setToDate(dto.getToDate());
         entity.setStatus(dto.getStatus() != null ? Status.valueOf(dto.getStatus()) : null);
-        IMapper<SheetLine, SheetLineDTO> mapper = MapperUtil.fetchMapper(Sheet.class);
-        if (dto.getDetails() != null) {
-            List<SheetLine> lines = dto.getDetails().stream()
-                    .map(lineDTO -> {
-                        SheetLine line = mapper.toEntity(lineDTO);
-                        line.setSheet(entity);
-                        return line;
-                    })
-                    .peek(line -> line.setSheet(entity))
-                    .collect(Collectors.toList());
-            entity.setDetails(lines);
-        }
+//        IMapper<SheetLine, SheetLineDTO> mapper = MapperUtil.fetchMapper(Sheet.class);
+//        if (dto.getDetails() != null) {
+//            List<SheetLine> lines = dto.getDetails().stream()
+//                    .map(lineDTO -> {
+//                        SheetLine line = mapper.toEntity(lineDTO);
+//                        line.setSheet(entity);
+//                        return line;
+//                    })
+//                    .peek(line -> line.setSheet(entity))
+//                    .collect(Collectors.toList());
+//            entity.setDetails(lines);
+//        }
         return entity;
     }
 
     @Override
-    protected SheetDTO createDTO() {
+    public SheetDTO createDTO() {
         return new SheetDTO();
     }
 
     @Override
-    protected Sheet createEntity() {
+    public Sheet createEntity() {
         return new Sheet();
     }
 }
