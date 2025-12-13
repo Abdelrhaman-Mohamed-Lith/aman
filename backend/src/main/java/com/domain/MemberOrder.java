@@ -1,15 +1,17 @@
 package com.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import com.Persistence.Persister;
+import com.utilities.ObjectChecker;
+import com.utilities.Result;
+import jakarta.persistence.*;
+import org.hibernate.annotations.Nationalized;
 
 @Entity
 public class MemberOrder extends DocumentFile {
     private Member member;
-    private Boolean cards;
+    private Boolean orderCouponsOnly;
     private Integer couponsCount;
+    private String remarks;
     private Attachment attachment1;
     private Attachment attachment2;
     private Attachment attachment3;
@@ -24,12 +26,12 @@ public class MemberOrder extends DocumentFile {
         this.member = member;
     }
 
-    public Boolean getCards() {
-        return cards;
+    public Boolean getOrderCouponsOnly() {
+        return orderCouponsOnly;
     }
 
-    public void setCards(Boolean cards) {
-        this.cards = cards;
+    public void setOrderCouponsOnly(Boolean orderCouponsOnly) {
+        this.orderCouponsOnly = orderCouponsOnly;
     }
 
     public Integer getCouponsCount() {
@@ -38,6 +40,15 @@ public class MemberOrder extends DocumentFile {
 
     public void setCouponsCount(Integer couponsCount) {
         this.couponsCount = couponsCount;
+    }
+
+    @Nationalized
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
     @OneToOne
@@ -68,5 +79,22 @@ public class MemberOrder extends DocumentFile {
 
     public void setAttachment3(Attachment attachment3) {
         this.attachment3 = attachment3;
+    }
+
+    @Override
+    public void updateCalculatedFields(Result result) {
+        super.updateCalculatedFields(result);
+        setCode(getMember().getName() + "_" + ObjectChecker.toStringOrEmpty(getMember().getSyndicate()));
+    }
+
+    @Override
+    public void isValidForCommit(Result result) {
+        super.isValidForCommit(result);
+        if (member == null) {
+            result.failure("Member is required");
+            return;
+        }
+        int count = Persister.countOf(getClass().getSimpleName(), " where  member_id=:member", Persister.params("member", getMember().getId()));
+        if (count > 0) result.failure("There is order for this member");
     }
 }

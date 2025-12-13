@@ -1,5 +1,7 @@
 package com.domain;
 
+import com.Persistence.Persister;
+import com.utilities.ObjectChecker;
 import com.utilities.Result;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Nationalized;
@@ -105,7 +107,23 @@ public class Member extends MasterFile {
 
     @Override
     public void updateCalculatedFields(Result result) {
-        super.updateCalculatedFields(result);
-        setCode(getWhatsappNumber());
+        setCode(getRegistrationNumber() + "_" + calcSyndicatePrefix(getSyndicate()));
+    }
+
+    private String calcSyndicatePrefix(Syndicate syndicate) {
+        if (ObjectChecker.areEqual(syndicate, Syndicate.Medical)) return "1";
+        if (ObjectChecker.areEqual(syndicate, Syndicate.Pharmaceutical)) return "2";
+        if (ObjectChecker.areEqual(syndicate, Syndicate.Dentists)) return "3";
+        return "4";
+    }
+
+    @Transient
+    @Override
+    public void isValidForCommit(Result result) {
+        super.isValidForCommit(result);
+        if (getId()==null) {
+            int count = Persister.countOf(getClass().getSimpleName(), " where  registrationNumber=:registrationNo and syndicate=:syndicate", Persister.params("registrationNo", getRegistrationNumber(), "syndicate", ObjectChecker.toStringOrEmpty(getSyndicate())));
+            if (count > 0) result.failure("This member already exists");
+        }
     }
 }

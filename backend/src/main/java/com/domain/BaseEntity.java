@@ -4,6 +4,7 @@ import com.utilities.Result;
 import com.utilities.ValidatorUtil;
 import jakarta.persistence.*;
 import com.utilities.IEntity;
+import org.hibernate.annotations.Nationalized;
 
 import java.time.LocalDate;
 
@@ -27,6 +28,7 @@ public abstract class BaseEntity implements IEntity {
         this.id = id;
     }
 
+    @Nationalized
     public String getCode() {
         return code;
     }

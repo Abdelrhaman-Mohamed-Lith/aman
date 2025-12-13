@@ -2,9 +2,11 @@ package com.services;
 
 import com.Persistence.Persister;
 import com.contracts.dtos.MemberDTO;
+import com.contracts.dtos.OrderDTO;
 import com.contracts.mappers.MemberMapper;
 import com.domain.Governorate;
 import com.domain.Member;
+import com.domain.MemberOrder;
 import com.domain.Syndicate;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import com.utilities.IEntity;
 import com.utilities.ObjectChecker;
 import com.utilities.Result;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,21 +25,10 @@ public class MemberService {
     @Transactional
     public MemberDTO create(MemberDTO dto) {
         Member entity = mapper.toEntity(dto);
-        entity.setCode(entity.getRegistrationNumber() + "_" + calcSyndicatePrefix(entity.getSyndicate()));
         Result result = Persister.saveOrUpdate(entity);
         if (result.isFailed())
             throw new RuntimeException(result.getMessage());
         return mapper.toDTO(entity);
-    }
-
-    private String calcSyndicatePrefix(Syndicate syndicate) {
-        if (ObjectChecker.areEqual(syndicate, Syndicate.Medical))
-            return "1";
-        if (ObjectChecker.areEqual(syndicate, Syndicate.Pharmaceutical))
-            return "2";
-        if (ObjectChecker.areEqual(syndicate, Syndicate.Dentists))
-            return "3";
-        return "4";
     }
 
     public List<MemberDTO> getAll() {
@@ -71,6 +63,16 @@ public class MemberService {
 
     public void delete(Long id) {
         IEntity entity = Persister.findById(Member.class, id);
-        Persister.remove(entity);
+        Result result = Persister.remove(entity);
+        if (result.isFailed()) throw new RuntimeException(result.getMessage());
+    }
+
+    public List<MemberDTO> getByRegistrationNo(String registrationNo) {
+        List<Member> members = Persister.list(Member.class, " WHERE registrationNumber =:registrationNumber", Persister.params("registrationNumber", registrationNo));
+        List<MemberDTO> dtos = new ArrayList<>();
+        for (Member member : members) {
+            dtos.add(mapper.toDTO(member));
+        }
+        return dtos;
     }
 }

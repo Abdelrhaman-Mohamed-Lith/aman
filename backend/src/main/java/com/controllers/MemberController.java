@@ -24,11 +24,16 @@ public class MemberController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MemberDTO> getMember(@PathVariable Long id) {
+    public ResponseEntity<MemberDTO> getMember(@PathVariable(name = "id") Long id) {
         MemberDTO dto = service.getById(id);
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/")
+    public ResponseEntity<List<MemberDTO>> getMemberByRegistrationNo(@RequestParam(name = "registrationNo") String registrationNo) {
+        List<MemberDTO> dto = service.getByRegistrationNo(registrationNo);
+        return ResponseEntity.ok(dto);
+    }
     @GetMapping
     public ResponseEntity<List<MemberDTO>> getMembers() {
         List<MemberDTO> list = service.getAll();

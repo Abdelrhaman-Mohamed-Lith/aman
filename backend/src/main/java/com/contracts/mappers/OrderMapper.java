@@ -24,8 +24,9 @@ public class OrderMapper extends BaseMapper<MemberOrder, OrderDTO> {
     public OrderDTO toDTO(MemberOrder entity) {
         if (entity == null) return null;
         OrderDTO dto = super.toDTO(entity);
-        dto.setCards(entity.getCards());
+        dto.setOrderCouponsOnly(entity.getOrderCouponsOnly());
         dto.setCouponsCount(entity.getCouponsCount());
+        dto.setRemarks(entity.getRemarks());
         if (entity.getMember() != null)
             dto.setMember((MemberDTO) MapperUtil.fetchMapper(Member.class).toDTO(entity.getMember()));
         IMapper<Attachment, AttachmentDTO> attachmentMapper = MapperUtil.fetchMapper(Attachment.class);
@@ -42,8 +43,9 @@ public class OrderMapper extends BaseMapper<MemberOrder, OrderDTO> {
     public MemberOrder toEntity(OrderDTO dto) {
         if (dto == null) return null;
         MemberOrder entity = super.toEntity(dto);
-        entity.setCards(dto.getCards());
+        entity.setOrderCouponsOnly(dto.getOrderCouponsOnly());
         entity.setCouponsCount(dto.getCouponsCount());
+        entity.setRemarks(dto.getRemarks());
         if (dto.getMember() != null)
             entity.setMember((Member) MapperUtil.fetchMapper(Member.class).toEntity(dto.getMember()));
         IMapper<Attachment, AttachmentDTO> attachmentMapper = MapperUtil.fetchMapper(Attachment.class);

@@ -92,6 +92,7 @@ public class Persister {
         execute((r) -> {
 
             if (obj instanceof BaseEntity baseEntity) {
+                baseEntity.updateCalculatedFields(result);
                 baseEntity.isValidForCommit(result);
                 int byCode = Persister.countOf(baseEntity.getClass().getSimpleName(), "where code = :code and id != :id", Persister.params("code", baseEntity.getCode(), "id", baseEntity.getId()));
                 if (byCode > 0)
@@ -208,11 +209,14 @@ public class Persister {
 
     }
 
-    public static void remove(Object obj) {
-        if (obj == null) return;
+    public static Result remove(Object obj) {
+        Result result = new Result();
+        if (obj == null) return result;
         execute(r -> {
             session.remove(obj);
-        }, new Result());
+        }, result);
+
+        return result;
     }
 
     public static void executeNativeQuery(String queryString, Map<String, Object> params) {

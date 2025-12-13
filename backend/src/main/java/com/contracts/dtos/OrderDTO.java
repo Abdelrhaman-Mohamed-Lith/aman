@@ -2,8 +2,9 @@ package com.contracts.dtos;
 
 public class OrderDTO extends DocumentFileDTO{
     private MemberDTO member;
-    private Boolean cards;
+    private Boolean orderCouponsOnly;
     private Integer couponsCount;
+    private String remarks;
     private AttachmentDTO attachment1;
     private AttachmentDTO attachment2;
     private AttachmentDTO attachment3;
@@ -16,12 +17,12 @@ public class OrderDTO extends DocumentFileDTO{
         this.member = member;
     }
 
-    public Boolean getCards() {
-        return cards;
+    public Boolean getOrderCouponsOnly() {
+        return orderCouponsOnly;
     }
 
-    public void setCards(Boolean cards) {
-        this.cards = cards;
+    public void setOrderCouponsOnly(Boolean orderCouponsOnly) {
+        this.orderCouponsOnly = orderCouponsOnly;
     }
 
     public Integer getCouponsCount() {
@@ -30,6 +31,14 @@ public class OrderDTO extends DocumentFileDTO{
 
     public void setCouponsCount(Integer couponsCount) {
         this.couponsCount = couponsCount;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
     public AttachmentDTO getAttachment1() {
